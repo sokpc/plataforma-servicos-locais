@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Serviços Locais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+    </style>
+</head>
+<body class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+        
+        <div class="text-center mb-10">
+            <h1 class="text-[36px] font-bold text-[#0F172A] mb-2">Plataforma de Serviços Locais</h1>
+            <p class="text-[18px] text-gray-600">
+                Fortalecendo a economia circular da nossa comunidade 
+                <span class="text-red-500 font-medium">[vale_28, 39]</span>
+            </p>
+        </div>
+
+        <form action="/" method="GET" class="max-w-3xl mx-auto mb-16 flex gap-3">
+            <input type="text" name="busca" placeholder="Procure por serviço ou bairro..." 
+                class="flex-1 px-5 py-4 bg-[#F1F5F9] border border-gray-200 rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-inner">
+            <button type="submit" class="bg-white px-10 py-4 border border-gray-200 rounded-lg font-bold text-[#0F172A] hover:bg-gray-50 shadow-sm transition">
+                Buscar
+            </button>
+        </form>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for p in profissionais %}
+            <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col items-center border border-gray-100 transition-transform hover:scale-[1.02]">
+                
+                <div class="p-10 flex flex-col items-center text-center flex-1">
+                    <div class="text-7xl mb-6">
+                        {{ p.emoji }}
+                    </div>
+                    
+                    <h3 class="font-bold text-[22px] text-[#0F172A] mb-2">{{ p.nome }}</h3>
+                    <p class="text-[18px] text-[#334155] font-medium mb-4">{{ p.servico }}</p>
+                    
+                    <p class="text-[#64748B] text-sm flex items-center gap-2">
+                        <span class="text-[#E11D48]">📍</span> {{ p.bairro }}
+                    </p>
+                </div>
+                
+                <div class="w-full px-6 pb-8">
+                    <a href="https://wa.me/55{{ p.whats }}?text=Olá {{ p.nome }}! Vi seu perfil na plataforma e gostaria de orçar um serviço." 
+                       target="_blank"
+                       class="block w-full bg-[#10B981] hover:bg-[#059669] text-white text-center font-bold py-4 px-4 rounded-xl text-[18px] transition-colors shadow-lg shadow-green-100">
+                        Chamar no WhatsApp
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if profissionais|length == 0 %}
+        <div class="text-center py-20">
+            <p class="text-gray-500 text-xl">Nenhum profissional encontrado com esse termo. 🔍</p>
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>
